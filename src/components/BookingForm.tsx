@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { t, type Lang } from "@/lib/translations"
 
 type FormState = {
   name: string
@@ -10,7 +11,9 @@ type FormState = {
   message: string
 }
 
-export default function BookingForm() {
+export default function BookingForm({ lang }: { lang: Lang }) {
+  const F = t[lang].booking.form
+
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
@@ -39,14 +42,14 @@ export default function BookingForm() {
       const data = await res.json()
 
       if (!res.ok) {
-        setErrorMsg(data.error || "Что-то пошло не так")
+        setErrorMsg(data.error || F.errorDefault)
         setStatus("error")
       } else {
         setStatus("success")
         setForm({ name: "", email: "", type: "short", area: "", message: "" })
       }
     } catch {
-      setErrorMsg("Нет соединения с сервером")
+      setErrorMsg(F.errorNetwork)
       setStatus("error")
     }
   }
@@ -56,16 +59,14 @@ export default function BookingForm() {
       <div className="bg-[#111] border border-[#C9A84C]/30 p-8 flex flex-col items-center justify-center text-center min-h-[480px]">
         <div className="text-5xl mb-6">✅</div>
         <h3 className="text-2xl font-bold text-[#C9A84C] mb-3" style={{ fontFamily: "var(--font-playfair)" }}>
-          Заявка отправлена!
+          {F.successTitle}
         </h3>
-        <p className="text-gray-400 mb-8 leading-relaxed">
-          Мы получили вашу заявку и свяжемся с вами<br />в течение 24 часов для подтверждения.
-        </p>
+        <p className="text-gray-400 mb-8 leading-relaxed">{F.successText}</p>
         <button
           onClick={() => setStatus("idle")}
           className="border border-[#C9A84C] text-[#C9A84C] px-8 py-3 text-xs tracking-widest uppercase hover:bg-[#C9A84C] hover:text-black transition-colors"
         >
-          Новая запись
+          {F.newBooking}
         </button>
       </div>
     )
@@ -73,10 +74,10 @@ export default function BookingForm() {
 
   return (
     <div className="bg-[#111] border border-[#C9A84C]/30 p-8">
-      <h3 className="text-xl font-bold mb-6">Заполните форму</h3>
+      <h3 className="text-xl font-bold mb-6">{F.title}</h3>
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
-          <label className="text-gray-400 text-xs uppercase tracking-widest block mb-2">Тип консультации</label>
+          <label className="text-gray-400 text-xs uppercase tracking-widest block mb-2">{F.typeLabel}</label>
           <div className="grid grid-cols-2 gap-3">
             <label className="flex items-center gap-3 bg-[#1a1a1a] border border-white/10 px-4 py-3 cursor-pointer hover:border-[#C9A84C] transition-colors">
               <input
@@ -88,8 +89,8 @@ export default function BookingForm() {
                 onChange={handleChange}
               />
               <div>
-                <div className="text-white text-sm font-medium">20–30 мин</div>
-                <div className="text-gray-500 text-xs">Краткая</div>
+                <div className="text-white text-sm font-medium">{F.shortTitle}</div>
+                <div className="text-gray-500 text-xs">{F.shortDesc}</div>
               </div>
             </label>
             <label className="flex items-center gap-3 bg-[#1a1a1a] border border-white/10 px-4 py-3 cursor-pointer hover:border-[#C9A84C] transition-colors">
@@ -102,44 +103,43 @@ export default function BookingForm() {
                 onChange={handleChange}
               />
               <div>
-                <div className="text-white text-sm font-medium">40–60 мин</div>
-                <div className="text-gray-500 text-xs">Расширенная</div>
+                <div className="text-white text-sm font-medium">{F.longTitle}</div>
+                <div className="text-gray-500 text-xs">{F.longDesc}</div>
               </div>
             </label>
           </div>
         </div>
 
         <div>
-          <label className="text-gray-400 text-xs uppercase tracking-widest block mb-2">Область права</label>
+          <label className="text-gray-400 text-xs uppercase tracking-widest block mb-2">{F.areaLabel}</label>
           <select
             name="area"
             value={form.area}
             onChange={handleChange}
             className="w-full bg-[#1a1a1a] border border-white/10 text-gray-400 px-4 py-3 focus:outline-none focus:border-[#C9A84C] transition-colors"
           >
-            <option value="">Выберите...</option>
-            <option value="Миграционное право">Миграционное право</option>
-            <option value="Шведское право">Шведское право</option>
-            <option value="Европейское право">Европейское право</option>
-            <option value="Другое">Другое</option>
+            <option value="">{F.areaPlaceholder}</option>
+            {F.areas.map((a) => (
+              <option key={a} value={a}>{a}</option>
+            ))}
           </select>
         </div>
 
         <div>
-          <label className="text-gray-400 text-xs uppercase tracking-widest block mb-2">Имя</label>
+          <label className="text-gray-400 text-xs uppercase tracking-widest block mb-2">{F.nameLabel}</label>
           <input
             type="text"
             name="name"
             value={form.name}
             onChange={handleChange}
-            placeholder="Ваше имя"
+            placeholder={F.namePlaceholder}
             required
             className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-[#C9A84C] placeholder-gray-600 transition-colors"
           />
         </div>
 
         <div>
-          <label className="text-gray-400 text-xs uppercase tracking-widest block mb-2">Email</label>
+          <label className="text-gray-400 text-xs uppercase tracking-widest block mb-2">{F.emailLabel}</label>
           <input
             type="email"
             name="email"
@@ -152,12 +152,12 @@ export default function BookingForm() {
         </div>
 
         <div>
-          <label className="text-gray-400 text-xs uppercase tracking-widest block mb-2">Описание вопроса</label>
+          <label className="text-gray-400 text-xs uppercase tracking-widest block mb-2">{F.messageLabel}</label>
           <textarea
             name="message"
             value={form.message}
             onChange={handleChange}
-            placeholder="Кратко опишите вашу ситуацию..."
+            placeholder={F.messagePlaceholder}
             rows={4}
             className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-[#C9A84C] placeholder-gray-600 transition-colors resize-none"
           />
@@ -172,10 +172,10 @@ export default function BookingForm() {
           disabled={status === "loading"}
           className="w-full bg-[#C9A84C] text-black font-bold py-4 text-sm tracking-widest uppercase hover:bg-[#e0bc6a] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {status === "loading" ? "Отправляем..." : "Записаться →"}
+          {status === "loading" ? F.submitting : F.submit}
         </button>
       </form>
-      <p className="text-gray-600 text-xs text-center mt-4">Подтверждение придёт на email в течение 24 часов</p>
+      <p className="text-gray-600 text-xs text-center mt-4">{F.confirm}</p>
     </div>
   )
 }
