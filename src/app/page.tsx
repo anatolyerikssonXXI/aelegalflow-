@@ -477,9 +477,9 @@ export default function Home() {
             </div>
             {/* Links */}
             <div className="flex flex-wrap gap-6 text-[11px] tracking-[0.2em] uppercase text-gray-500">
-              <a href="#" className="hover:text-[#C9A84C] transition-colors duration-300">{T.footer.privacy}</a>
-              <a href="#" className="hover:text-[#C9A84C] transition-colors duration-300">{T.footer.terms}</a>
-              <a href="#" className="hover:text-[#C9A84C] transition-colors duration-300">{T.footer.cookies}</a>
+              <a href="/privacy" className="hover:text-[#C9A84C] transition-colors duration-300">{T.footer.privacy}</a>
+              <a href="/terms" className="hover:text-[#C9A84C] transition-colors duration-300">{T.footer.terms}</a>
+              <a href="/cookies" className="hover:text-[#C9A84C] transition-colors duration-300">{T.footer.cookies}</a>
             </div>
             {/* Telegram */}
             <p className="text-gray-600 text-sm">{T.footer.telegram}</p>

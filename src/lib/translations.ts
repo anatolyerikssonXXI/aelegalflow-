@@ -219,13 +219,13 @@ export const t = {
           num: "01",
           title: "Migration Law",
           desc: "Protecting your rights at every stage of the migration process — from first application to appeal.",
-          items: ["Residence Permit (ВНЖ/ПМЖ)", "Work Permits", "Swedish Citizenship", "Family Reunification", "Appeals against Migrationsverket", "Refugee Rights & Asylum", "Children's Rights", "Deportation & Expulsion"],
+          items: ["Temporary Residence Permit (TRP)", "Permanent Residence Permit (PRP)", "Work Permits", "Swedish Citizenship", "Family Reunification", "Appeals against Migrationsverket", "Refugee Rights & Asylum", "Deportation & Expulsion"],
         },
         {
           num: "02",
           title: "Swedish Law",
           desc: "Full range of services under Swedish legislation — from employment disputes to administrative law.",
-          items: ["Employment Disputes (arbetsrätt)", "Family Law (familjerätt)", "Förvaltningslagen — Administrative Law", "Miljöbalken — Environmental Law", "Procedural Law", "Social Law", "Rights Protection"],
+          items: ["Family Law (familjerätt)", "Employment Law (arbetsrätt)", "Administrative Law (förvaltningslagen)", "Environmental Law (miljöbalken)", "Procedural Law", "Social Law", "Rights Protection"],
         },
         {
           num: "03",
@@ -401,7 +401,7 @@ export const t = {
           num: "01",
           title: "Migrationsrätt",
           desc: "Skydd av dina rättigheter i varje steg av migrationsprocessen — från första ansökan till överklagande.",
-          items: ["Uppehållstillstånd (ВНЖ/ПМЖ)", "Arbetstillstånd", "Svenskt medborgarskap", "Familjeåterförening", "Överklaganden mot Migrationsverket", "Flyktingrätt & asyl", "Barns rättigheter", "Utvisning & avvisning"],
+          items: ["Tillfälligt uppehållstillstånd (TUT)", "Permanent uppehållstillstånd (PUT)", "Arbetstillstånd", "Svenskt medborgarskap", "Familjeåterförening", "Överklaganden mot Migrationsverket", "Flyktingrätt & asyl", "Utvisning & avvisning"],
         },
         {
           num: "02",
