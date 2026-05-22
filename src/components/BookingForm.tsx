@@ -6,6 +6,9 @@ import { t, type Lang } from "@/lib/translations"
 type FormState = {
   name: string
   email: string
+  phone: string
+  preferredLang: string
+  urgent: string
   type: string
   area: string
   message: string
@@ -17,6 +20,9 @@ export default function BookingForm({ lang }: { lang: Lang }) {
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
+    phone: "",
+    preferredLang: "",
+    urgent: "normal",
     type: "short",
     area: "",
     message: "",
@@ -46,7 +52,7 @@ export default function BookingForm({ lang }: { lang: Lang }) {
         setStatus("error")
       } else {
         setStatus("success")
-        setForm({ name: "", email: "", type: "short", area: "", message: "" })
+        setForm({ name: "", email: "", phone: "", preferredLang: "", urgent: "normal", type: "short", area: "", message: "" })
       }
     } catch {
       setErrorMsg(F.errorNetwork)
@@ -149,6 +155,47 @@ export default function BookingForm({ lang }: { lang: Lang }) {
             required
             className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-[#C9A84C] placeholder-gray-600 transition-colors"
           />
+        </div>
+
+        <div>
+          <label className="text-gray-400 text-xs uppercase tracking-widest block mb-2">{F.phoneLabel}</label>
+          <input
+            type="tel"
+            name="phone"
+            value={form.phone}
+            onChange={handleChange}
+            placeholder={F.phonePlaceholder}
+            className="w-full bg-[#1a1a1a] border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-[#C9A84C] placeholder-gray-600 transition-colors"
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="text-gray-400 text-xs uppercase tracking-widest block mb-2">{F.langLabel}</label>
+            <select
+              name="preferredLang"
+              value={form.preferredLang}
+              onChange={handleChange}
+              className="w-full bg-[#1a1a1a] border border-white/10 text-gray-400 px-4 py-3 focus:outline-none focus:border-[#C9A84C] transition-colors"
+            >
+              <option value="">—</option>
+              {F.langs.map((l) => (
+                <option key={l} value={l}>{l}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="text-gray-400 text-xs uppercase tracking-widest block mb-2">{F.urgentLabel}</label>
+            <select
+              name="urgent"
+              value={form.urgent}
+              onChange={handleChange}
+              className="w-full bg-[#1a1a1a] border border-white/10 text-gray-400 px-4 py-3 focus:outline-none focus:border-[#C9A84C] transition-colors"
+            >
+              <option value="normal">{F.urgentNormal}</option>
+              <option value="urgent">{F.urgentUrgent}</option>
+            </select>
+          </div>
         </div>
 
         <div>

@@ -287,9 +287,12 @@ export default function Home() {
                 <p className="text-[#C9A84C] text-[10px] tracking-[0.2em] uppercase mb-3">{T.pricing.packages}</p>
                 <div className="space-y-4">
                   {T.pricing.fullPackages.map((s) => (
-                    <div key={s.title} className="flex justify-between items-center border-b border-white/5 pb-4 last:border-0 last:pb-0">
-                      <p className="text-gray-400 text-sm">{s.title}</p>
-                      <span className="text-[#C9A84C] text-xs whitespace-nowrap">{s.price}</span>
+                    <div key={s.title} className="flex justify-between items-start border-b border-white/5 pb-4 last:border-0 last:pb-0 gap-4">
+                      <div>
+                        <p className="text-gray-300 text-sm">{s.title}</p>
+                        {"desc" in s && s.desc && <p className="text-gray-500 text-xs mt-0.5">{s.desc}</p>}
+                      </div>
+                      <span className="text-[#C9A84C] text-xs whitespace-nowrap mt-0.5">{s.price}</span>
                     </div>
                   ))}
                 </div>
