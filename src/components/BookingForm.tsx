@@ -28,6 +28,7 @@ export default function BookingForm({ lang }: { lang: Lang }) {
     message: "",
   })
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+  const [bookedType, setBookedType] = useState<string>("short")
   const [errorMsg, setErrorMsg] = useState("")
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
@@ -51,6 +52,7 @@ export default function BookingForm({ lang }: { lang: Lang }) {
         setErrorMsg(data.error || F.errorDefault)
         setStatus("error")
       } else {
+        setBookedType(form.type)
         setStatus("success")
         setForm({ name: "", email: "", phone: "", preferredLang: "", urgent: "normal", type: "short", area: "", message: "" })
       }
@@ -60,6 +62,10 @@ export default function BookingForm({ lang }: { lang: Lang }) {
     }
   }
 
+  const calendlyUrl = bookedType === "long"
+    ? "https://calendly.com/anatolyeriksson/new-meeting"
+    : "https://calendly.com/anatolyeriksson/30-minute-meeting"
+
   if (status === "success") {
     return (
       <div className="bg-[#111] border border-[#C9A84C]/30 p-8 flex flex-col items-center justify-center text-center min-h-[480px]">
@@ -67,10 +73,18 @@ export default function BookingForm({ lang }: { lang: Lang }) {
         <h3 className="text-2xl font-bold text-[#C9A84C] mb-3" style={{ fontFamily: "var(--font-playfair)" }}>
           {F.successTitle}
         </h3>
-        <p className="text-gray-400 mb-8 leading-relaxed">{F.successText}</p>
+        <p className="text-gray-400 mb-6 leading-relaxed">{F.successText}</p>
+        <a
+          href={calendlyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full bg-[#C9A84C] text-black font-bold py-4 text-sm tracking-widest uppercase hover:bg-[#e0bc6a] transition-colors text-center mb-4 block"
+        >
+          {lang === "sv" ? "Välj tid →" : lang === "en" ? "Choose time →" : "Выбрать время →"}
+        </a>
         <button
           onClick={() => setStatus("idle")}
-          className="border border-[#C9A84C] text-[#C9A84C] px-8 py-3 text-xs tracking-widest uppercase hover:bg-[#C9A84C] hover:text-black transition-colors"
+          className="border border-white/20 text-gray-500 px-8 py-3 text-xs tracking-widest uppercase hover:border-[#C9A84C] hover:text-[#C9A84C] transition-colors"
         >
           {F.newBooking}
         </button>
